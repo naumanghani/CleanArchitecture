@@ -1,0 +1,17 @@
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/AMPOL.API/bin/Debug/net5.0
+/AMPOL.API/obj/Debug/net5.0
+/AMPOL.API/obj/Release/net5.0
+/AMPOL.Application/bin/Debug/net5.0
+/AMPOL.Domain/bin/Debug/net5.0
+.vs/
+AMPOL.API/obj/
+AMPOL.Application/obj/
+AMPOL.Domain/obj/
+AMPOL.Infrastructure/bin/
+AMPOL.Infrastructure/obj/
+Application.UnitTests/bin/
+Application.UnitTests/
