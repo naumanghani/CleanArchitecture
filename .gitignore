@@ -14,4 +14,4 @@ AMPOL.Domain/obj/
 AMPOL.Infrastructure/bin/
 AMPOL.Infrastructure/obj/
 Application.UnitTests/bin/
-Application.UnitTests/
+Application.UnitTests/obj/
