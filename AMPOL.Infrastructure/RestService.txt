@@ -1,0 +1,33 @@
+ public async Task<TR> CallPost<T, TR>(string uri, T data, string authToken = "")
+        {
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            if (!string.IsNullOrEmpty(authToken))
+                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authToken);
+
+            var content = new StringContent(JsonConvert.SerializeObject(data));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            string jsonResult = string.Empty;
+            var responseMessage = await httpClient.PostAsync(uri, content);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                jsonResult = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
+                //if jsonResult returns empty string, means the API address is incorrect
+                if (string.IsNullOrEmpty(jsonResult))
+                    responseMessage.StatusCode = HttpStatusCode.NotFound;
+                else
+                {
+                    var json = JsonConvert.DeserializeObject<TR>(jsonResult);
+                    return json;
+                }
+
+            }
+            if (responseMessage.StatusCode == HttpStatusCode.Forbidden ||
+                 responseMessage.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                throw new ServiceAuthenticationException(jsonResult);
+            }
+
+            throw new HttpRequestExceptionEx(responseMessage.StatusCode, jsonResult);
+
+        }
